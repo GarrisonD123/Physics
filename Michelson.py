@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 from LightPipes import *
 import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 import sys
 if sys.version_info[0] < 3:
     from Tkinter import *
@@ -23,24 +22,24 @@ tx=1*mrad; ty=0.0*mrad # tilt of mirror 1
 f=50*cm # focal length of positive lens
 root = Tk.Tk()
 
+#Gets the slider values and passes them into expirement function
 def update():
     z2 = scalez2.get()*cm
     tx = scaletx.get()*mrad
     ty = scalety.get() * mrad
     expirement(z2, tx,ty)
 
-
+#Sliders to control mirrors
 scalez2 = Tk.Scale(root, orient='horizontal', label='length movable arm[cm]', length=200, from_=1, to=100)
 scalez2.pack()
-scaletx = Tk.Scale(root, orient='horizontal', label='horizontal mirror tilt[mrad]', length=200, from_=0, to=5,resolution = .01)
+scaletx = Tk.Scale(root, orient='horizontal', label='horizontal mirror tilt[mrad]', length=200, from_=-2, to=2,resolution = .01)
 scaletx.pack()
-scalety = Tk.Scale(root, orient='horizontal', label='vertical mirror tilt[mrad]', length=200, from_=0, to=5,resolution = .01)
+scalety = Tk.Scale(root, orient='horizontal', label='vertical mirror tilt[mrad]', length=200, from_=-2, to=2,resolution = .01)
 scalety.pack()
 update_btn = Button(root, text="Click to update", command=update).pack()
 
-
+#Runs expirement with updated variables
 def expirement(z2,tx,ty):
-
     #Generate a weak converging laser beam using a weak positive lens:
     F=Begin(size,wavelength,N)
     #F=GaussBeam(F, R)
